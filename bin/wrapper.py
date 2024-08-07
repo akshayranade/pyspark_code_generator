@@ -14,9 +14,6 @@ def etl(source_dict:dict, pipeline_dict:dict, spark:SparkSession):
     #Read all source tables
     input_data = read_data(source_conf, spark)
 
-    input_data['employee_department'].show(10)
-    input_data['employee_demo'].show(10)
-
     #Run the data pipeline
     logger.info("Calling pipeline method.")
     print("Calling pipeline method.")
@@ -41,7 +38,7 @@ def pipeline(pipeline_dict:dict, data:dict, spark:SparkSession):
 def write_data(source_conf:dict, target_data:dict):
     for output_table in source_conf['output_tables'].keys():
         df = target_data[output_table]
-        df.coalesce(1).write.parquet(source_conf['output_tables'].get(output_table))
+        df.coalesce(1).write.mode('overwrite').parquet(source_conf['output_tables'].get(output_table))
 
 
 def read_data(source_conf:dict, spark:SparkSession) -> dict:
