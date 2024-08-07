@@ -1,0 +1,15 @@
+{
+	"project_name": "ar",
+	"version": "0.1",
+	"input_tables":
+	{
+		"customer":"",
+		"kyc":""
+	},
+	"output_tables":
+	{
+		"employee_all":"/Users/akshayranade/Documents/Personal/spark_output/pipeline_demo/employee_all",
+		"income_by_region":"/Users/akshayranade/Documents/Personal/spark_output/pipeline_demo/income_by_region",
+		"stats_by_department":"/Users/akshayranade/Documents/Personal/spark_output/pipeline_demo/stats_by_department"
+	}
+}

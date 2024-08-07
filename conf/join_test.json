@@ -1,0 +1,21 @@
+
+{
+	"module_name": "ar",
+	"version": "0.1",
+	"pipeline":
+	{
+		"stage_1":{
+			"join":{
+				"left_table":"brand_sales",
+                "right_table":"brand_parts",
+                "join_condition":["Brand_left == Brand"],
+                "join_type":"left",
+				"right_table_cols_to_select": ["Brand","category","price"],
+                "left_table_cols_to_select": ["Brand","US_Sales_2022"],
+                "output":"joined"
+			}
+        }
+        
+	}
+
+}

@@ -1,0 +1,18 @@
+{
+	"module_name": "ar",
+	"version": "0.1",
+	"pipeline":
+	{
+		"stage_1":{
+			"aggregate":{
+				"table_name" : "Employee_agg" ,
+				"group_by_cols" : ["department"] ,
+                "aggregate_functions" :{ "salary":"max", "employee_name":"max","salary":"sum", "salary":"mean", "salary":"min", "employee_name":"count"
+                },
+                "output" : "aggregated"
+        
+			}
+        }
+	}
+
+}

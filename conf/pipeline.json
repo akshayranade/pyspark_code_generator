@@ -1,0 +1,41 @@
+{
+	"module_name": "ar",
+	"version": "0.1",
+	"pipeline":
+	{
+		"stage_1":{
+			"join":{
+				"left_table":"employee_department",
+                "right_table":"employee_demo",
+                "join_condition":["employee_name_left == first_name"],
+                "join_type":"left",
+                "output":"employee_all"
+			}
+        },
+		"stage_2":{
+			"aggregate":{
+				"table_name" : "employee_all" ,
+				"group_by_cols" : ["department"] ,
+                "aggregate_functions" :{ 
+                    "salary":"max", 
+                    "employee_name":"max",
+                    "employee_name":"count",
+					"salary":"sum"
+                },
+                "output" : "stats_by_department"
+        
+			}
+        },
+        "stage_3":{
+			"aggregate":{
+				"table_name" : "employee_all" ,
+                "group_by_cols" : ["pin_code"] ,
+                "aggregate_functions" :{
+					"salary":"sum"
+                },
+                "output" : "income_by_region"
+			}
+        }
+	}
+
+}

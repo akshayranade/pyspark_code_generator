@@ -1,1 +1,1 @@
-from code_master import CodeMaster
+from .code_master import CodeMaster

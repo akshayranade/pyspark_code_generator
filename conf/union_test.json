@@ -1,0 +1,16 @@
+{
+	"module_name": "ar",
+	"version": "0.1",
+	"pipeline":
+	{
+		"stage_1":{
+			"union":{
+				"left_table_to_union":"uniondata1",
+                "right_table_to_union":"uniondata2",
+                "union_distinct":"true",
+                "output":"unioned_data"
+			}
+        }
+
+}
+}

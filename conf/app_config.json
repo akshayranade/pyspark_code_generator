@@ -1,9 +1,0 @@
-{
-    "input_tables":{
-        "xyz": "e_mfs_db.customer",
-        "dq": "e_mpcss_db.kyc"
-    },
-    "output_locations":{
-        "xyz_dq": "s3://cld/ls/xyz_dq"
-    }
-}
