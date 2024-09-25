@@ -6,10 +6,10 @@
 		"stage_1":{
 			"join":{
 				"left_table":"employee_department",
-                "right_table":"employee_demo",
-                "join_condition":["employee_name_left == first_name"],
-                "join_type":"left",
-                "output":"employee_all"
+				"joins": [
+					{"type": "LEFT", "table": "employee_demo", "on_condition": "employee_department.employee_name == employee_demo.first_name"}
+				],
+				"output":"employee_all"
 			}
         },
 		"stage_2":{
@@ -35,7 +35,55 @@
                 },
                 "output" : "income_by_region"
 			}
-        }
+        },
+        "stage_4":{
+			"filter":{
+				"table_name" : "taxi_trips" ,
+                "filter_condition":"business_dt between '2017-07-01' and '2017-07-31'",
+                "output":"filtered_taxi_trips"
+			}
+        },
+		"stage_5":{
+			"join":{
+				"left_table":"filtered_taxi_trips",
+				"joins": [
+					{"type": "LEFT", "table": "taxi_zones", "on_condition": "filtered_taxi_trips.pulocationid == taxi_zones.locationid"}
+				],
+				"select_columns":["filtered_taxi_trips.vendorid","filtered_taxi_trips.lpep_pickup_datetime","filtered_taxi_trips.lpep_dropoff_datetime","filtered_taxi_trips.pulocationid", "taxi_zones.borough", "taxi_zones.zone", "filtered_taxi_trips.dolocationid", "filtered_taxi_trips.passenger_count", "filtered_taxi_trips.total_amount", "filtered_taxi_trips.business_dt"],
+				"where_condition":"zone not in ('Astoria')",
+				"output":"taxi_trips_pu"
+			}
+		},
+		"stage_6":{
+			"rename_columns":{
+				"table_name": "taxi_trips_pu",
+                "column_mappings": {
+                    "borough": "pu_borough",
+                    "zone": "pu_zone"
+                },
+                "output": "taxi_trips_pur"
+			}
+		},
+		"stage_7":{
+			"join":{
+				"left_table":"taxi_trips_pur",
+				"joins": [
+					{"type": "LEFT", "table": "taxi_zones", "on_condition": "taxi_trips_pur.dolocationid == taxi_zones.locationid"}
+				],
+				"select_columns":["taxi_trips_pur.vendorid","taxi_trips_pur.lpep_pickup_datetime","taxi_trips_pur.lpep_dropoff_datetime","taxi_trips_pur.pulocationid", "taxi_trips_pur.pu_borough", "taxi_trips_pur.pu_zone", "taxi_trips_pur.dolocationid", "taxi_zones.borough", "taxi_zones.zone", "taxi_trips_pur.passenger_count", "taxi_trips_pur.total_amount", "taxi_trips_pur.business_dt"],
+				"output":"taxi_trips_pu_do"
+			}
+		},
+		"stage_8":{
+			"rename_columns":{
+				"table_name": "taxi_trips_pu_do",
+                "column_mappings": {
+                    "borough": "do_borough",
+                    "zone": "do_zone"
+                },
+                "output": "taxi_trips_loc_details"
+			}
+		}
 	}
 
 }
